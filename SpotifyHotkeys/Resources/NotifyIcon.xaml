@@ -3,15 +3,15 @@
                     xmlns:tb="http://www.hardcodet.net/taskbar">
 
     <ContextMenu x:Shared="False" x:Key="SysTrayMenu">
-        <MenuItem Header="About"></MenuItem>
-        <MenuItem Header="Settings"></MenuItem>
+        <MenuItem Header="About..."></MenuItem>
+        <MenuItem Header="Settings..." FontWeight="Bold"></MenuItem>
         <Separator/>
         <MenuItem Header="Exit" Command="{Binding ExitCommand}"></MenuItem>
     </ContextMenu>
 
     <tb:TaskbarIcon x:Key="NotifyIcon"
                     IconSource="Images/icon.ico"
-                    ToolTipText="ToolTipText"
+                    ToolTipText="SpotifyHotkeys"
                     ContextMenu="{StaticResource SysTrayMenu}">
     </tb:TaskbarIcon>
 </ResourceDictionary>
