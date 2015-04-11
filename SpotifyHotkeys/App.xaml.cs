@@ -1,7 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using Hardcodet.Wpf.TaskbarNotification;
 using SpotifyHotkeys.Core;
 using SpotifyHotkeys.Hotkeys;
+using SpotifyHotkeys.ViewModels;
+using SpotifyHotkeys.Views;
 
 namespace SpotifyHotkeys
 {
@@ -14,16 +17,28 @@ namespace SpotifyHotkeys
         private HotKey _nextTrackHotkey;
         private HotKey _previousTrackHotkey;
 
-        private void App_OnStartup(object sender, StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
+            base.OnStartup(e);
+
             /* For now it is sufficient to hard code the hotkeys and have all the logic here.
              * Later on we want to have a UI for changing hotkeys and maybe also some sort of
              * notifications when the track is changed.
              */
-            
+
             _spotifyActionService = new UnmanagedSpotifyActionService();
             _nextTrackHotkey = new HotKey(Key.Right, KeyModifier.Ctrl | KeyModifier.Shift, OnNextTrackHotkeyActivated);
             _previousTrackHotkey = new HotKey(Key.Left, KeyModifier.Ctrl | KeyModifier.Shift, OnPreviousTrackHotkeyActivated);
+
+            var notifyIcon = FindResource("NotifyIcon") as TaskbarIcon;
+            notifyIcon.DataContext = new NotifyIconViewModel();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+            _nextTrackHotkey.Dispose();
+            _previousTrackHotkey.Dispose();
         }
 
         private void OnNextTrackHotkeyActivated(HotKey hotKey)
@@ -34,12 +49,6 @@ namespace SpotifyHotkeys
         private void OnPreviousTrackHotkeyActivated(HotKey hotKey)
         {
             _spotifyActionService.PreviousTrack();
-        }
-
-        private void App_OnExit(object sender, ExitEventArgs e)
-        {
-            _nextTrackHotkey.Dispose();
-            _previousTrackHotkey.Dispose();
         }
     }
 }
