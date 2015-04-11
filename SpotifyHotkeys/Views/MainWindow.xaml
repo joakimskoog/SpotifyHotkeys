@@ -1,0 +1,13 @@
+﻿<Window x:Class="SpotifyHotkeys.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Content="Previous" Click="ButtonBase_OnClick"></Button>
+        <Button Grid.Column="1" Content="Next" Click="NextClick"></Button>
+    </Grid>
+</Window>
