@@ -7,6 +7,7 @@ I started this project because I grew tired of always opening the Spotify client
 ## Features
 * Change to the next track
 * Change to the previous track
+* Toggle play/pause
 
 ## Contributing
 Do you have a new feature? Maybe an API method that is not currently implemented? Here's what to do (in the following order)
