@@ -1,18 +1,15 @@
 ﻿using System;
+using SpotifyHotkeys.ViewModels;
 
-namespace SpotifyHotkeys.ViewModels
+namespace SpotifyHotkeys.Views
 {
-    public class AboutViewModel
+    public class AboutWindowFactory : IWindowFactory
     {
         private readonly string _author;
         private readonly string _description;
         private readonly string _version;
 
-        public string Author { get { return _author; } }
-        public string Description { get { return _description; } }
-        public string Version { get { return _version; } }
-
-        public AboutViewModel(string author, string description, string version)
+        public AboutWindowFactory(string author, string description, string version)
         {
             if (author == null) throw new ArgumentNullException("author");
             if (description == null) throw new ArgumentNullException("description");
@@ -20,6 +17,15 @@ namespace SpotifyHotkeys.ViewModels
             _author = author;
             _description = description;
             _version = version;
+        }
+
+        public void ShowWindow()
+        {
+            var view = new AboutWindow();
+            var viewModel = new AboutViewModel(_author, _description, _version);
+            view.DataContext = viewModel;
+
+            view.Show();
         }
     }
 }

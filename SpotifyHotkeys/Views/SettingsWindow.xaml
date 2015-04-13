@@ -1,7 +1,7 @@
-﻿<Window x:Class="SpotifyHotkeys.Views.AboutWindow"
+﻿<Window x:Class="SpotifyHotkeys.Views.SettingsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="About SpotifyHotkeys" Height="300" Width="300">
+        Title="Settings" Height="300" Width="300">
     <Grid>
         <Label Content="Coming soon..."></Label>
     </Grid>

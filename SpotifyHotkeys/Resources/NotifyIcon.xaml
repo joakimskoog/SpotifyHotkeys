@@ -3,8 +3,8 @@
                     xmlns:tb="http://www.hardcodet.net/taskbar">
 
     <ContextMenu x:Shared="False" x:Key="SysTrayMenu">
-        <MenuItem Header="About..."></MenuItem>
-        <MenuItem Header="Settings..." FontWeight="Bold"></MenuItem>
+        <MenuItem Header="About..." Command="{Binding ShowAboutWindowCommand}"></MenuItem>
+        <MenuItem Header="Settings..." Command="{Binding ShowSettingsWindowCommand}" FontWeight="Bold"></MenuItem>
         <Separator/>
         <MenuItem Header="Exit" Command="{Binding ExitCommand}"></MenuItem>
     </ContextMenu>
