@@ -4,7 +4,6 @@ using Hardcodet.Wpf.TaskbarNotification;
 using SpotifyHotkeys.Core;
 using SpotifyHotkeys.Hotkeys;
 using SpotifyHotkeys.ViewModels;
-using SpotifyHotkeys.Views;
 
 namespace SpotifyHotkeys
 {
@@ -14,8 +13,7 @@ namespace SpotifyHotkeys
     public partial class App
     {
         private ISpotifyActionService _spotifyActionService;
-        private HotKey _nextTrackHotkey;
-        private HotKey _previousTrackHotkey;
+        private IHotKeyManager _hotkeyManager;
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -26,19 +24,33 @@ namespace SpotifyHotkeys
              * notifications when the track is changed.
              */
 
+            AddHotkeys();          
             _spotifyActionService = new UnmanagedSpotifyActionService();
-            _nextTrackHotkey = new HotKey(Key.Right, KeyModifier.Ctrl | KeyModifier.Shift, OnNextTrackHotkeyActivated);
-            _previousTrackHotkey = new HotKey(Key.Left, KeyModifier.Ctrl | KeyModifier.Shift, OnPreviousTrackHotkeyActivated);
 
             var notifyIcon = FindResource("NotifyIcon") as TaskbarIcon;
             notifyIcon.DataContext = new NotifyIconViewModel();
         }
 
+        private void AddHotkeys()
+        {
+            _hotkeyManager = new HotkeyManager();
+            _hotkeyManager.AddHotkey(new HotKey(Key.Right, KeyModifier.Ctrl | KeyModifier.Shift, OnNextTrackHotkeyActivated),
+                "NextTrack");
+            _hotkeyManager.AddHotkey(new HotKey(Key.Left, KeyModifier.Ctrl | KeyModifier.Shift, OnPreviousTrackHotkeyActivated),
+                "PreviousTrack");
+            _hotkeyManager.AddHotkey(new HotKey(Key.Space, KeyModifier.Ctrl | KeyModifier.Shift, OnPausePlayHotkeyActivated),
+                "PausePlay");
+        }
+
+        private void OnPausePlayHotkeyActivated(HotKey hotKey)
+        {
+            _spotifyActionService.TogglePlay();
+        }
+
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-            _nextTrackHotkey.Dispose();
-            _previousTrackHotkey.Dispose();
+            _hotkeyManager.RemoveAllHotkeys();
         }
 
         private void OnNextTrackHotkeyActivated(HotKey hotKey)
