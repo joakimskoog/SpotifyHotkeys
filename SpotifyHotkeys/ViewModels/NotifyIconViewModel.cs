@@ -33,16 +33,6 @@ namespace SpotifyHotkeys.ViewModels
             }
         }
 
-        private void ExecuteOpenSettingsWindow(object obj)
-        {
-            _settingsWindowFactory.ShowWindow();
-        }
-
-        private void ExecuteOpenAboutWindow(object obj)
-        {
-            _aboutWindowFactory.ShowWindow();
-        }
-
         #endregion
 
         public NotifyIconViewModel(IWindowFactory aboutWindowFactory, IWindowFactory settingsWindowFactory)
@@ -58,6 +48,16 @@ namespace SpotifyHotkeys.ViewModels
         private void ExecuteExit(object param)
         {
             Application.Current.Shutdown();
+        }
+
+        private void ExecuteOpenSettingsWindow(object obj)
+        {
+            _settingsWindowFactory.ShowWindow();
+        }
+
+        private void ExecuteOpenAboutWindow(object obj)
+        {
+            _aboutWindowFactory.ShowWindow();
         }
 
         #endregion
