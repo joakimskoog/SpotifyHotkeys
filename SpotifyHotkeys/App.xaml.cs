@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
@@ -39,7 +40,7 @@ namespace SpotifyHotkeys
             _spotifyActionService = new UnmanagedSpotifyActionService();
 
             var notifyIcon = FindResource("NotifyIcon") as TaskbarIcon;
-            notifyIcon.DataContext = new NotifyIconViewModel(aboutFactory, new SettingsWindowAdapter());
+            notifyIcon.DataContext = new NotifyIconViewModel(aboutFactory, new SettingsWindowAdapter(_spotifyActionService, _hotkeyManager));
         }
 
         private void AddHotkeys()
