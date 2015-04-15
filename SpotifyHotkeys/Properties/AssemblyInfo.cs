@@ -3,16 +3,20 @@ using System.Resources;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Windows;
+using SpotifyHotkeys;
+using SpotifyHotkeys.Attributes;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SpotifyHotkeys")]
 [assembly: AssemblyDescription("SpotifyHotkeys is a lightweight program for performing actions such as changing tracks via hotkeys.")]
+[assembly: AssemblyAuthor("Joakim Skoog")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SpotifyHotkeys")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright © 2015 Joakim Skoog")]
+[assembly: AssemblyLink("https://github.com/joakimskoog/SpotifyHotkeys")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

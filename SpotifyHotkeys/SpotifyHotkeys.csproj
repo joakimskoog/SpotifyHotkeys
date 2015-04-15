@@ -58,8 +58,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Attributes\AssemblyAuthorAttribute.cs" />
+    <Compile Include="Attributes\AssemblyLinkAttribute.cs" />
     <Compile Include="ViewModels\SettingsViewModel.cs" />
-    <Compile Include="Views\SettingsWindowFactory.cs" />
+    <Compile Include="Views\SettingsWindowAdapter.cs" />
     <Compile Include="Views\SettingsWindow.xaml.cs">
       <DependentUpon>SettingsWindow.xaml</DependentUpon>
     </Compile>
@@ -75,10 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Compile Include="Views\AboutWindowFactory.cs" />
+    <Compile Include="Views\AboutWindowAdapter.cs" />
     <Compile Include="Hotkeys\HotkeyManager.cs" />
     <Compile Include="Hotkeys\IHotKeyManager.cs" />
-    <Compile Include="Views\IWindowFactory.cs" />
+    <Compile Include="Views\IWindow.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\AboutViewModel.cs" />
     <Compile Include="ViewModels\NotifyIconViewModel.cs" />

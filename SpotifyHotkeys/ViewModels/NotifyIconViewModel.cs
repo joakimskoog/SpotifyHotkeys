@@ -7,8 +7,8 @@ namespace SpotifyHotkeys.ViewModels
 {
     public class NotifyIconViewModel
     {
-        private readonly IWindowFactory _aboutWindowFactory;
-        private readonly IWindowFactory _settingsWindowFactory;
+        private readonly IWindow _aboutWindow;
+        private readonly IWindow _settingsWindow;
 
         #region Commands
 
@@ -35,12 +35,12 @@ namespace SpotifyHotkeys.ViewModels
 
         #endregion
 
-        public NotifyIconViewModel(IWindowFactory aboutWindowFactory, IWindowFactory settingsWindowFactory)
+        public NotifyIconViewModel(IWindow aboutWindow, IWindow settingsWindow)
         {
-            if (aboutWindowFactory == null) throw new ArgumentNullException("aboutWindowFactory");
-            if (settingsWindowFactory == null) throw new ArgumentNullException("settingsWindowFactory");
-            _aboutWindowFactory = aboutWindowFactory;
-            _settingsWindowFactory = settingsWindowFactory;
+            if (aboutWindow == null) throw new ArgumentNullException("aboutWindow");
+            if (settingsWindow == null) throw new ArgumentNullException("settingsWindow");
+            _aboutWindow = aboutWindow;
+            _settingsWindow = settingsWindow;
         }
 
         #region Command methods
@@ -52,12 +52,12 @@ namespace SpotifyHotkeys.ViewModels
 
         private void ExecuteOpenSettingsWindow(object obj)
         {
-            _settingsWindowFactory.ShowWindow();
+            _settingsWindow.Show();
         }
 
         private void ExecuteOpenAboutWindow(object obj)
         {
-            _aboutWindowFactory.ShowWindow();
+            _aboutWindow.Show();
         }
 
         #endregion

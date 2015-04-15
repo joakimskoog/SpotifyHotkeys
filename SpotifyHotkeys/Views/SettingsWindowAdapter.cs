@@ -2,9 +2,9 @@
 
 namespace SpotifyHotkeys.Views
 {
-    public class SettingsWindowFactory : IWindowFactory
+    public class SettingsWindowAdapter : IWindow
     {
-        public void ShowWindow()
+        public void Show()
         {
             var view = new SettingsWindow();
             var viewModel = new SettingsViewModel();

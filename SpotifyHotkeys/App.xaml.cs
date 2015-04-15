@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
+using SpotifyHotkeys.Attributes;
 using SpotifyHotkeys.Core;
 using SpotifyHotkeys.Hotkeys;
 using SpotifyHotkeys.ViewModels;
@@ -26,16 +27,19 @@ namespace SpotifyHotkeys
              * notifications when the track is changed.
              */
 
-            var assembly = typeof (App).Assembly;
+            var assembly = typeof(App).Assembly;
 
+            var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
+            var author = assembly.GetCustomAttribute<AssemblyAuthorAttribute>();
+            var link = assembly.GetCustomAttribute<AssemblyLinkAttribute>();
 
-            var aboutFactory = new AboutWindowFactory("author", "description", assembly.GetName().Version.ToString());
+            var aboutFactory = new AboutWindowAdapter(author.Author, description.Description, assembly.GetName().Version.ToString(), link.Link);
 
-            AddHotkeys();          
+            AddHotkeys();
             _spotifyActionService = new UnmanagedSpotifyActionService();
 
             var notifyIcon = FindResource("NotifyIcon") as TaskbarIcon;
-            notifyIcon.DataContext = new NotifyIconViewModel(aboutFactory, new SettingsWindowFactory());
+            notifyIcon.DataContext = new NotifyIconViewModel(aboutFactory, new SettingsWindowAdapter());
         }
 
         private void AddHotkeys()
