@@ -15,17 +15,12 @@ namespace SpotifyHotkeys.Core
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
-        private IntPtr _spotifyWindowPointer;
         private IntPtr SpotifyWindowPointer
         {
             get
             {
-                if (_spotifyWindowPointer == IntPtr.Zero)
-                {
-                    _spotifyWindowPointer = FindWindow("SpotifyMainWindow", null);
-                }
-
-                return _spotifyWindowPointer;
+                //We sadly can't cache this because the user could close the Spotify window without restarting the application which will result in the actions not working due to an invalid window handle.
+                return FindWindow("SpotifyMainWindow", null);
             }
         }
 
