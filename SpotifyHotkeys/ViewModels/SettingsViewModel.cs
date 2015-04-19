@@ -4,7 +4,7 @@ using SpotifyHotkeys.Hotkeys;
 
 namespace SpotifyHotkeys.ViewModels
 {
-    public class SettingsViewModel
+    public class SettingsViewModel : ViewModelBase
     {
         private readonly ISpotifyActionService _spotifyActionService;
         private readonly IHotKeyManager _hotkeyManager;

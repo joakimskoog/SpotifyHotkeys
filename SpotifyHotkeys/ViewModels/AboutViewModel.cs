@@ -2,12 +2,12 @@
 
 namespace SpotifyHotkeys.ViewModels
 {
-    public class AboutViewModel
+    public class AboutViewModel : ViewModelBase
     {
         private readonly string _author;
         private readonly string _description;
         private readonly string _version;
-        private string _link;
+        private readonly string _link;
 
         public string Author { get { return _author; } }
         public string Description { get { return _description; } }

@@ -11,7 +11,7 @@
 
     <tb:TaskbarIcon x:Key="NotifyIcon"
                     IconSource="Images/icon.ico"
-                    ToolTipText="SpotifyHotkeys"
+                    ToolTipText="{Binding CurrentInformation, UpdateSourceTrigger=PropertyChanged}"
                     ContextMenu="{StaticResource SysTrayMenu}">
     </tb:TaskbarIcon>
 </ResourceDictionary>
