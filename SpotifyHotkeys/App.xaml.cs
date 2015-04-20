@@ -28,33 +28,42 @@ namespace SpotifyHotkeys
 
             try
             {
-
-                var spotifWebHelper = SpotifyWebHelperApi.Create();
-
-                var assembly = typeof(App).Assembly;
-
-                var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
-                var author = assembly.GetCustomAttribute<AssemblyAuthorAttribute>();
-                var link = assembly.GetCustomAttribute<AssemblyLinkAttribute>();
-
-                var aboutFactory = new AboutWindowAdapter(author.Author, description.Description,
-                    assembly.GetName().Version.ToString(), link.Link);
-
                 AddHotkeys();
-                _spotifyActionService = new UnmanagedSpotifyActionService();
-
-                _taskbarIcon = FindResource("NotifyIcon") as TaskbarIcon;
-                _notifyIconViewModel = new NotifyIconViewModel(aboutFactory,
-                    new SettingsWindowAdapter(_spotifyActionService, _hotkeyManager), spotifWebHelper, "SpotifyHotkeys");
-                _taskbarIcon.DataContext = _notifyIconViewModel;
+                var aboutWindow = AssembleAboutWindow();
+                AssembleTaskbarIcon(aboutWindow);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(string.Format("Failed to start SpotifyHotkeys. Please make sure that Spotify is up and running!\n\n" +
-                              "If Spotify is up and running, please report the following stack trace here: " +
-                              "https://github.com/joakimskoog/SpotifyHotkeys/issues \n\nStack trace: {0}", ex.StackTrace),"Error");
+                              "If Spotify is up and running, please report the following error here: " +
+                              "https://github.com/joakimskoog/SpotifyHotkeys/issues \n\nError: {0}", ex.Message), "Error");
                 Current.Shutdown();
             }
+        }
+
+        private IWindow AssembleAboutWindow()
+        {
+            var assembly = typeof(App).Assembly;
+
+            var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
+            var author = assembly.GetCustomAttribute<AssemblyAuthorAttribute>();
+            var link = assembly.GetCustomAttribute<AssemblyLinkAttribute>();
+
+            var aboutWindow = new AboutWindowAdapter(author.Author, description.Description,
+                assembly.GetName().Version.ToString(), link.Link);
+
+            return aboutWindow;
+        }
+
+        private void AssembleTaskbarIcon(IWindow aboutWindow)
+        {
+            var spotifWebHelper = SpotifyWebHelperApi.Create();
+            _spotifyActionService = new UnmanagedSpotifyActionService();
+
+            _notifyIconViewModel = new NotifyIconViewModel(aboutWindow,
+                new SettingsWindowAdapter(_spotifyActionService, _hotkeyManager), spotifWebHelper, "SpotifyHotkeys");
+            _taskbarIcon = FindResource("NotifyIcon") as TaskbarIcon;
+            _taskbarIcon.DataContext = _notifyIconViewModel;
         }
 
         private void AddHotkeys()
