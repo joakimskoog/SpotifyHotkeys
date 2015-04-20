@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Hardcodet.Wpf.TaskbarNotification;
@@ -25,27 +26,35 @@ namespace SpotifyHotkeys
         {
             base.OnStartup(e);
 
-            /* For now it is sufficient to hard code the hotkeys and have all the logic here.
-             * Later on we want to have a UI for changing hotkeys and maybe also some sort of
-             * notifications when the track is changed.
-             */
+            try
+            {
 
-            var spotifWebHelper = SpotifyWebHelperApi.Create();
+                var spotifWebHelper = SpotifyWebHelperApi.Create();
 
-            var assembly = typeof(App).Assembly;
+                var assembly = typeof(App).Assembly;
 
-            var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
-            var author = assembly.GetCustomAttribute<AssemblyAuthorAttribute>();
-            var link = assembly.GetCustomAttribute<AssemblyLinkAttribute>();
+                var description = assembly.GetCustomAttribute<AssemblyDescriptionAttribute>();
+                var author = assembly.GetCustomAttribute<AssemblyAuthorAttribute>();
+                var link = assembly.GetCustomAttribute<AssemblyLinkAttribute>();
 
-            var aboutFactory = new AboutWindowAdapter(author.Author, description.Description, assembly.GetName().Version.ToString(), link.Link);
+                var aboutFactory = new AboutWindowAdapter(author.Author, description.Description,
+                    assembly.GetName().Version.ToString(), link.Link);
 
-            AddHotkeys();
-            _spotifyActionService = new UnmanagedSpotifyActionService();
+                AddHotkeys();
+                _spotifyActionService = new UnmanagedSpotifyActionService();
 
-            _taskbarIcon = FindResource("NotifyIcon") as TaskbarIcon;
-            _notifyIconViewModel = new NotifyIconViewModel(aboutFactory, new SettingsWindowAdapter(_spotifyActionService, _hotkeyManager), spotifWebHelper, "SpotifyHotkeys");
-            _taskbarIcon.DataContext = _notifyIconViewModel;
+                _taskbarIcon = FindResource("NotifyIcon") as TaskbarIcon;
+                _notifyIconViewModel = new NotifyIconViewModel(aboutFactory,
+                    new SettingsWindowAdapter(_spotifyActionService, _hotkeyManager), spotifWebHelper, "SpotifyHotkeys");
+                _taskbarIcon.DataContext = _notifyIconViewModel;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(string.Format("Failed to start SpotifyHotkeys. Please make sure that Spotify is up and running!\n\n" +
+                              "If Spotify is up and running, please report the following stack trace here: " +
+                              "https://github.com/joakimskoog/SpotifyHotkeys/issues \n\nStack trace: {0}", ex.StackTrace),"Error");
+                Current.Shutdown();
+            }
         }
 
         private void AddHotkeys()
@@ -67,7 +76,10 @@ namespace SpotifyHotkeys
         protected override void OnExit(ExitEventArgs e)
         {
             base.OnExit(e);
-            _hotkeyManager.RemoveAllHotkeys();
+            if (_hotkeyManager != null)
+            {
+                _hotkeyManager.RemoveAllHotkeys();
+            }
         }
 
         private void OnNextTrackHotkeyActivated(HotKey hotKey)
