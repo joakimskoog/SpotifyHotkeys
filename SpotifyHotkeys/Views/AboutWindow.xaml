@@ -8,7 +8,7 @@
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0">
+        <StackPanel Grid.Row="0" Background="WhiteSmoke" Margin="2,0,0,0">
             <StackPanel Orientation="Horizontal">
                 <Label Content="Author:"></Label>
                 <Label Content="{Binding Author}"></Label>
@@ -21,24 +21,10 @@
                 <Label Content="Github:"></Label>
                 <Label Content="{Binding Link}"></Label>
             </StackPanel>
-
-
-            <!--<Grid.RowDefinitions>
-                <RowDefinition></RowDefinition>
-                <RowDefinition></RowDefinition>
-            </Grid.RowDefinitions>-->
-
-            <!--<StackPanel Orientation="Horizontal" Grid.Row="0">
-                <Label Content="Author"></Label>
-                <Label Content="Version"></Label>
-            </StackPanel>-->
-
         </StackPanel>
-        <DockPanel Grid.Row="1">
-            <Label Content="Description:" DockPanel.Dock="Top"></Label>
-            <ScrollViewer>
-                <TextBox IsReadOnly="True" Text="{Binding Description, Mode=OneWay}" TextWrapping="WrapWithOverflow"></TextBox>
-            </ScrollViewer>
+        <DockPanel Grid.Row="1" Margin="2,0,2,2">
+            <Label Content="Description:" DockPanel.Dock="Top" Background="WhiteSmoke"></Label>
+            <TextBox IsReadOnly="True" Text="{Binding Description, Mode=OneWay}" TextWrapping="WrapWithOverflow" Background="White" BorderThickness="1" BorderBrush="Black"></TextBox>
         </DockPanel>
     </Grid>
 </Window>
