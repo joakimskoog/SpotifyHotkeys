@@ -9,7 +9,6 @@ namespace SpotifyHotkeys.ViewModels
     public class NotifyIconViewModel : ViewModelBase
     {
         private readonly IWindow _aboutWindow;
-        private readonly IWindow _settingsWindow;
         private readonly ISpotifyWebHelperCommunicationService _spotifyWebHelper;
 
         private string _currentInformation;
@@ -17,8 +16,8 @@ namespace SpotifyHotkeys.ViewModels
         {
             get
             {
-                return _currentInformation; 
-                
+                return _currentInformation;
+
             }
             set
             {
@@ -41,25 +40,14 @@ namespace SpotifyHotkeys.ViewModels
             get { return _showAboutWindowCommand ?? (_showAboutWindowCommand = new RelayCommand(ExecuteOpenAboutWindow)); }
         }
 
-        private ICommand _showSettingsWindowCommand;
-        public ICommand ShowSettingsWindowCommand
-        {
-            get
-            {
-                return _showSettingsWindowCommand ?? (_showSettingsWindowCommand = new RelayCommand(ExecuteOpenSettingsWindow));
-            }
-        }
-
         #endregion
 
-        public NotifyIconViewModel(IWindow aboutWindow, IWindow settingsWindow, ISpotifyWebHelperCommunicationService spotifyWebHelper, string currentInformation)
+        public NotifyIconViewModel(IWindow aboutWindow, ISpotifyWebHelperCommunicationService spotifyWebHelper, string currentInformation)
         {
             if (aboutWindow == null) throw new ArgumentNullException("aboutWindow");
-            if (settingsWindow == null) throw new ArgumentNullException("settingsWindow");
             if (spotifyWebHelper == null) throw new ArgumentNullException("spotifyWebHelper");
             if (currentInformation == null) throw new ArgumentNullException("currentInformation");
             _aboutWindow = aboutWindow;
-            _settingsWindow = settingsWindow;
             _spotifyWebHelper = spotifyWebHelper;
             _currentInformation = currentInformation;
         }
@@ -86,11 +74,6 @@ namespace SpotifyHotkeys.ViewModels
         private void ExecuteExit(object param)
         {
             Application.Current.Shutdown();
-        }
-
-        private void ExecuteOpenSettingsWindow(object obj)
-        {
-            _settingsWindow.Show();
         }
 
         private void ExecuteOpenAboutWindow(object obj)

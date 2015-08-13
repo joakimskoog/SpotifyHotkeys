@@ -60,8 +60,7 @@ namespace SpotifyHotkeys
             var spotifWebHelper = SpotifyWebHelperApi.Create();
             _spotifyActionService = new UnmanagedSpotifyActionService();
 
-            _notifyIconViewModel = new NotifyIconViewModel(aboutWindow,
-                new SettingsWindowAdapter(_spotifyActionService, _hotkeyManager), spotifWebHelper, "SpotifyHotkeys");
+            _notifyIconViewModel = new NotifyIconViewModel(aboutWindow, spotifWebHelper, "SpotifyHotkeys");
             _taskbarIcon = FindResource("NotifyIcon") as TaskbarIcon;
             _taskbarIcon.DataContext = _notifyIconViewModel;
         }
